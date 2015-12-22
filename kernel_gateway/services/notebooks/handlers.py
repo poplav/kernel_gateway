@@ -88,6 +88,7 @@ class NotebookAPIHandler(tornado.web.RequestHandler):
                 'args' : parse_args(self.request.arguments),
                 'path' : self.path_kwargs
             })
+            print("request = {}".format(REQUEST))
             request_code = self._request_assignment_for_lang(self.kernel_name, REQUEST)
 
             access_log.debug('Request code for notebook cell is: {}'.format(request_code))
