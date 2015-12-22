@@ -54,7 +54,7 @@ class NotebookAPIHandler(tornado.web.RequestHandler):
                     result['content'] = self.error_message
                 else:
                     result['content'] = ''.join(self.stream_messages)
-                #self.execution_future.set_result(result)
+                self.execution_future.set_result(result)
             # Store the execute result
             elif msg['header']['msg_type'] == 'execute_result':
                 self.execute_result = msg['content']['data']
