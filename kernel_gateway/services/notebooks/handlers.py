@@ -52,15 +52,19 @@ class NotebookAPIHandler(tornado.web.RequestHandler):
                     result['status'] = 500
                 elif self.execute_result and self.execute_result is not '':
                     result['content'] = self.error_message
+                    print("execute result is not empty and = {}".format(result))
                 else:
                     result['content'] = ''.join(self.stream_messages)
+                print("setting execution future result = {}".format(result))
                 self.execution_future.set_result(result)
             # Store the execute result
             elif msg['header']['msg_type'] == 'execute_result':
                 self.execute_result = msg['content']['data']
+                print("storing execute result")
             # Accumulate the stream messages
             elif msg['header']['msg_type'] == 'stream':
                 self.stream_messages.append(msg['content']['text'])
+                print("accumulating stream")
             # Store the error message
             elif msg['header']['msg_type'] == 'error':
                 self.error_message = 'Error {}: {} \n'.format(
