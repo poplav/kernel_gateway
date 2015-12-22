@@ -42,9 +42,9 @@ class NotebookAPIHandler(tornado.web.RequestHandler):
         '''
         # Only look at messages which are derived from the parent_header
         # TODO Refactor this so we only look for parent headers for the actual cell execution
+        print("message = {}".format(msg))
         if msg['parent_header']['msg_id'] == self.parent_header:
             # On idle status, exit our loop
-            print("message = {}".format(msg))
             if msg['header']['msg_type'] == 'status' and msg['content']['execution_state'] == 'idle':
                 result = {'status': 200, 'content': ''}
                 if self.error_message:
