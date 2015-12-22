@@ -95,6 +95,7 @@ class NotebookAPIHandler(tornado.web.RequestHandler):
             kernel_client.execute(request_code)
             self.parent_header = kernel_client.execute(source_code)
             result = yield self.execution_future
+            print("result = {}".format(result))
             # TODO: Will we need to add the ability to specify mime types?
             self.set_header('Content-Type', 'text/plain')
             self.set_status(result['status'])
