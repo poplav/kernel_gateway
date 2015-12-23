@@ -100,10 +100,10 @@ class NotebookAPIHandler(tornado.web.RequestHandler):
                 'path' : self.path_kwargs
             })
             print("request = {}".format(REQUEST))
-            request_code = self._request_assignment_for_lang(self.kernel_name, REQUEST)
-            print("request code assignment for lang = {}".format(request_code))
             request_code = self._request_format_json_for_lang(self.kernel_name, REQUEST)
             print("request code json for lang = {}".format(request_code))
+            request_code = self._request_assignment_for_lang(self.kernel_name, REQUEST)
+            print("request code assignment for lang = {}".format(request_code))
             access_log.debug('Request code for notebook cell is: {}'.format(request_code))
             kernel_client.execute(request_code)
             self.parent_header = kernel_client.execute(source_code)
