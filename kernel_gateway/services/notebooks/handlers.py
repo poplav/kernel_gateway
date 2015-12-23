@@ -20,7 +20,7 @@ class NotebookAPIHandler(tornado.web.RequestHandler):
     stream_messages = []
     error_message = None
     _assignment_statements = {'r': "REQUEST <- '{}'",
-        None : "REQUEST = '{}'"}
+        None : "REQUEST = \"{}\""}
 
     def initialize(self, sources, kernel_pool, kernel_name):
         self.kernel_pool = kernel_pool
