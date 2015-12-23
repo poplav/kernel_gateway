@@ -34,6 +34,12 @@ class NotebookAPIHandler(tornado.web.RequestHandler):
             statement = self._assignment_statements[None]
         return statement.format(expression)
 
+    def _request_format_json_for_lang(self, kernel_name, expression):
+        print("kernel name is {}".format(kernel_name))
+        if kernel_name == 'julia-0.3':
+            expression = json.dumps(expression)
+        return expression
+
     def on_recv(self, msg):
         '''
         Receives messages for a particular code execution defined by self.parent_header.
@@ -95,7 +101,9 @@ class NotebookAPIHandler(tornado.web.RequestHandler):
             })
             print("request = {}".format(REQUEST))
             request_code = self._request_assignment_for_lang(self.kernel_name, REQUEST)
-            print("request code = {}".format(request_code))
+            print("request code assignment for lang = {}".format(request_code))
+            request_code = self._request_format_json_for_lang(self.kernel_name, REQUEST)
+            print("request code json for lang = {}".format(request_code))
             access_log.debug('Request code for notebook cell is: {}'.format(request_code))
             kernel_client.execute(request_code)
             self.parent_header = kernel_client.execute(source_code)
