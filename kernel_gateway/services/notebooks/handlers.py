@@ -37,7 +37,7 @@ class NotebookAPIHandler(tornado.web.RequestHandler):
     def _request_format_json_for_lang(self, kernel_name, expression):
         print("kernel name is {}".format(kernel_name))
         if kernel_name == 'julia-0.3':
-            expression = expression.replace('\"'', '\\"')
+            expression = expression.replace('\"'', "\\"')
         return expression
 
     def on_recv(self, msg):
