@@ -40,6 +40,11 @@ class NotebookAPIHandler(tornado.web.RequestHandler):
         expression = expression.replace('\"', '\\"')
         return expression
 
+    def _format_request(self, expression):
+        expression = expression.replace('\"', '\\"')
+        assignment_statement = "REQUEST = \"{}\""
+        return assignment_statement.format(expression)
+
     def on_recv(self, msg):
         '''
         Receives messages for a particular code execution defined by self.parent_header.
@@ -100,9 +105,10 @@ class NotebookAPIHandler(tornado.web.RequestHandler):
                 'path' : self.path_kwargs
             })
             print("request = {}".format(REQUEST))
-            request_code = self._request_format_json_for_lang(self.kernel_name, REQUEST)
-            print("request code json for lang = {}".format(request_code))
-            request_code = self._request_assignment_for_lang(self.kernel_name, request_code)
+            #request_code = self._request_format_json_for_lang(self.kernel_name, REQUEST)
+            #print("request code json for lang = {}".format(request_code))
+            #request_code = self._request_assignment_for_lang(self.kernel_name, request_code)
+            request_code = self._format_request(REQUEST)
             print("request code assignment for lang = {}".format(request_code))
             access_log.debug('Request code for notebook cell is: {}'.format(request_code))
             kernel_client.execute(request_code)
