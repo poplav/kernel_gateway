@@ -19,8 +19,8 @@ class NotebookAPIHandler(tornado.web.RequestHandler):
     execute_result = None
     stream_messages = []
     error_message = None
-    _assignment_statements = {'r': "REQUEST <- '{}'",
-        'julia-0.3': "REQUEST = \"{}\"", None: "REQUEST = '{}'"}
+    _assignment_statements = {'r': "REQUEST <- \"{}\"",
+        'julia-0.3': "REQUEST = \"{}\"", None: "REQUEST = \"{}\""}
 
     def initialize(self, sources, kernel_pool, kernel_name):
         self.kernel_pool = kernel_pool
@@ -36,8 +36,8 @@ class NotebookAPIHandler(tornado.web.RequestHandler):
 
     def _request_format_json_for_lang(self, kernel_name, expression):
         print("kernel name is {}".format(kernel_name))
-        if kernel_name == 'julia-0.3':
-            expression = expression.replace('\"', '\\"')
+        #if kernel_name == 'julia-0.3':
+        expression = expression.replace('\"', '\\"')
         return expression
 
     def on_recv(self, msg):
