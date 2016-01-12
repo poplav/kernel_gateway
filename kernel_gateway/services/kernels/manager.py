@@ -115,10 +115,12 @@ class SeedingMappingKernelManager(MappingKernelManager):
                     client.start_channels()
                     client.wait_for_ready()
                 for code in self.seed_source:
+                    print("code = {}".format(code))
                     # Execute every code cell and wait for each to succeed or fail
                     if self.api_indicator.match(code) is None:
                         client.execute(code)
                         msg = client.shell_channel.get_msg(block=True)
+                        print("msg = {}".format(msg))
                         if msg['content']['status'] != 'ok':
                             # Shutdown the channels to remove any lingering ZMQ messages
                             client.stop_channels()
